@@ -31,21 +31,21 @@ export class Ex18Component {
           name: 'Obama',
           email: 'obama@gmail.com',
           age: 67,
-          image: 'assets/avatars/obama.jpg'
+          image: '/assets/avatars/obama.jpg'
         },
         {
           id: 'Cus456',
           name: 'Kim jong Un',
           email: 'unun@gmail.com',
           age: 38,
-          image: 'assets/avatars/kju.jpg'
+          image: '/assets/avatars/kju.jpg'
         },
         {
           id: 'Cus789',
           name: 'Putin',
           email: 'putin@gmail.com',
           age: 77,
-          image: 'assets/avatars/putin.jpg'
+          image: '/assets/avatars/putin.jpg'
         }
       ]
     },
@@ -58,21 +58,21 @@ export class Ex18Component {
           name: 'Hồ Cẩm Đào',
           email: 'hodao@gmail.com',
           age: 16,
-          image: 'assets/avatars/hcd.jpg'
+          image: '/assets/avatars/hcd.jpg'
         },
         {
           id: 'Cus111',
           name: 'Tap Can Binh',
           email: 'binhbinh@gmail.com',
           age: 67,
-          image: 'assets/avatars/tcb.jpg'
+          image: '/assets/avatars/tcb.jpg'
         },
         {
           id: 'Cus222',
           name: 'Trump',
           email: 'trump@gmail.com',
           age: 79,
-          image: 'assets/avatars/trump.jpg'
+          image: '/assets/avatars/trump.jpg'
         }
       ]
     }
