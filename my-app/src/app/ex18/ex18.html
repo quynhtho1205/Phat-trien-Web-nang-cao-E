@@ -1,0 +1,31 @@
+<div class="customer-wrapper">
+  <table class="customer-table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>#</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let group of customerGroups">
+        <tr class="group-header">
+          <td colspan="5">{{ group.id }} - {{ group.title }}</td>
+        </tr>
+
+        <tr *ngFor="let customer of group.customers">
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.age }}</td>
+          <td class="avatar-cell">
+            <img [src]="customer.image" [alt]="customer.name" />
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

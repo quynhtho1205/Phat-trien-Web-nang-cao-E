@@ -1,0 +1,18 @@
+<p>product-list-dropdown-component works!</p>
+
+<ol>
+  @for (product of products; track product.id) {
+    <li>
+      {{ product.name }} - USD {{ product.price }}
+      <br />
+      <img [src]="product.image_link" height="100" width="100" />
+    </li>
+  }
+</ol>
+
+<h3>Dropdown list:</h3>
+<select>
+  @for (product of products; track product.id) {
+    <option [value]="product.id">{{ product.name }} - USD {{ product.price }}</option>
+  }
+</select>

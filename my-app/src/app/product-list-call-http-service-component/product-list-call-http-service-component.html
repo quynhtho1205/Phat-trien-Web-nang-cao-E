@@ -1,0 +1,26 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>PRICE</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (product of products(); track $index) {
+            <tr [class.invalid_product]="product.price < 0">
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price | currency:'USD' }}</td>
+                <td>
+                    <img [src]="product.image_link" height="100" width="100">
+                </td>
+            </tr>
+        }
+        @empty {
+            <tr>
+                <td colspan="3">No products available.</td>
+            </tr>
+        }
+    </tbody>
+</table>

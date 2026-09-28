@@ -1,0 +1,27 @@
+<h3>Event Binding - Phương trình bậc 1</h3>
+
+<table>
+  <tr>
+    <td>a:</td>
+    <td><input type="number" [value]="a" #hsa /></td>
+  </tr>
+  <tr>
+    <td>b:</td>
+    <td><input type="number" [value]="b" #hsb /></td>
+  </tr>
+  <tr>
+    <td>Result:</td>
+    <td>{{ result }}</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <button (click)="doSolution(hsa.value, hsb.value)">Solution</button>
+    </td>
+  </tr>
+  <tr>
+    <td>Kết quả:</td>
+    <td>{{ result }}</td>
+  </tr>
+</table>
+
+<p>Phương trình: a*x + b = 0 => x = -b / a</p>

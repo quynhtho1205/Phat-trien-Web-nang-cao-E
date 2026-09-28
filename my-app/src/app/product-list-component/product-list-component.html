@@ -1,0 +1,50 @@
+<p>product-list-component works!</p>
+Way 1: Using *ngFor directive
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>PRICE</th>
+            <th>DETAIL</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price | currency:'USD' }}</td>
+            <td>
+                <a [routerLink]="['/products', product.id]">View detail</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+Way 2: Using &#64;for directive
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>PRICE</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (product of products; track $index) {
+            <tr [class.invalid_product]="product.price < 0">
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price | currency:'USD' }}</td>
+                <td>
+                    <img [src]="product.image_link" height="100" width="100">
+                </td>
+            </tr>
+        }
+        @empty {
+            <tr>
+                <td colspan="3">No products available.</td>
+            </tr>
+        }
+    </tbody>
+</table>
