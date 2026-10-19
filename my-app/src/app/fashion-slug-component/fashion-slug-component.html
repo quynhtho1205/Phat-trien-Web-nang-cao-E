@@ -1,0 +1,13 @@
+<div class="container my-3" style="max-width: 700px;">
+  @if (errMessage()) {
+    <div class="alert alert-danger">{{ errMessage() }}</div>
+  }
+
+  @if (fashion(); as f) {
+    <h3>{{ f.fashion_subject }}</h3>
+    <p class="text-muted">Style: {{ f.style }}</p>
+    <img src="{{ f.getBase64String() }}" style="max-width: 300px;" class="mb-3 d-block">
+    <p>{{ f.fashion_detail }}</p>
+    <a routerLink="/fashion-search">&larr; Back to search</a>
+  }
+</div>

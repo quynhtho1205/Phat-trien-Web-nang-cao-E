@@ -39,6 +39,9 @@
     position:absolute;
     display:none;
     width:10em;
+    z-index:1000;
+    background:white;
+    box-shadow:0 4px 8px rgba(0,0,0,0.2);
 }
 
 #container li:hover ul{

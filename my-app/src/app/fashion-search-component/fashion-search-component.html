@@ -1,0 +1,43 @@
+<div class="container my-3" style="max-width: 900px;">
+  <h4>Search Fashion</h4>
+
+  <div class="d-flex gap-2 mb-3">
+    <select class="form-select" style="max-width: 170px;" name="field" [(ngModel)]="field">
+      <option value="name">By name</option>
+      <option value="detail">By description</option>
+    </select>
+    <input type="text" class="form-control" name="keyword" placeholder="Enter keyword"
+      [(ngModel)]="keyword" (keyup.enter)="search()">
+    <button class="btn btn-primary" (click)="search()">Search</button>
+  </div>
+
+  @if (errMessage()) {
+    <div class="alert alert-danger">{{ errMessage() }}</div>
+  }
+
+  @if (searched()) {
+    <p>Found {{ fashions().length }} result(s)</p>
+    <table class="table table-bordered align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Fashion Subject</th>
+          <th>Fashion Detail</th>
+          <th>Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (f of fashions(); track f._id) {
+          <tr>
+            <td><a [routerLink]="['/fashion', slugOf(f)]">{{ f.fashion_subject }}</a></td>
+            <td>{{ f.fashion_detail }}</td>
+            <td><img src="{{ f.getBase64String() }}" width="80" height="80" style="object-fit: cover;"></td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="3" class="text-center text-muted">No fashion matches "{{ keyword }}"</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

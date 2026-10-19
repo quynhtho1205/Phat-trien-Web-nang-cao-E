@@ -1,0 +1,40 @@
+<div class="container my-4" style="max-width: 700px;">
+  <h3 class="mb-3">Filter Books by Price</h3>
+
+  <div class="d-flex gap-2 mb-3">
+    <input #min type="number" class="form-control" placeholder="Min price" value="250">
+    <input #max type="number" class="form-control" placeholder="Max price" value="300">
+    <button class="btn btn-primary" (click)="filterBooks(min.value, max.value)">Filter</button>
+  </div>
+
+  @if (errMessage()) {
+    <div class="alert alert-danger">{{ errMessage() }}</div>
+  }
+
+  <table class="table table-bordered table-striped align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>BookId</th>
+        <th>BookName</th>
+        <th class="text-end">Price</th>
+        <th class="text-center">Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (book of books(); track book.BookId) {
+        <tr>
+          <td>{{ book.BookId }}</td>
+          <td>{{ book.BookName }}</td>
+          <td class="text-end">{{ book.Price }}</td>
+          <td class="text-center">
+            <img src="{{ server_images_link }}{{ book.Image }}" width="60" height="80" style="object-fit: cover;" [alt]="book.BookName">
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="4" class="text-center text-muted">No books in this price range</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

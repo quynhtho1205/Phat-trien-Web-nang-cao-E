@@ -1,0 +1,34 @@
+<div class="container my-4" style="max-width: 700px;">
+  <h3 class="mb-3">Book List</h3>
+
+  @if (errMessage()) {
+    <div class="alert alert-danger">{{ errMessage() }}</div>
+  }
+
+  <table class="table table-bordered table-striped table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center" style="width: 100px;">BookId</th>
+        <th>BookName</th>
+        <th class="text-end" style="width: 120px;">Price</th>
+        <th class="text-center" style="width: 140px;">Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (book of books(); track book.BookId) {
+        <tr>
+          <td class="text-center">{{ book.BookId }}</td>
+          <td>{{ book.BookName }}</td>
+          <td class="text-end">{{ book.Price }}</td>
+          <td class="text-center">
+            <img class="book-img" src="{{ server_images_link }}{{ book.Image }}" [alt]="book.BookName">
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="4" class="text-center text-muted">Not found books</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

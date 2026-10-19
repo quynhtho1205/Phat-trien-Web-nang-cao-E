@@ -1,0 +1,113 @@
+<main class="fs-page">
+  <div class="fs-wrap">
+
+    <!-- ===== Header ===== -->
+    <header class="fs-header">
+      <p class="eyebrow">Chapter 7 · MongoDB</p>
+      <h1 class="fs-title">Fashion Search 2</h1>
+      <p class="fs-subtitle">Rank fashions by text similarity to your keyword.</p>
+    </header>
+
+    <!-- ===== Search panel ===== -->
+    <section class="fs-panel">
+      <form class="search-row" (ngSubmit)="search()">
+        <label for="kw" class="visually-hidden">Keyword</label>
+        <div class="search-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M20 20l-3.5-3.5"></path>
+          </svg>
+          <input id="kw" type="text" name="keyword" placeholder="Enter keyword" [(ngModel)]="keyword">
+        </div>
+        <button type="submit" class="search-btn" [disabled]="loading()">
+          {{ loading() ? 'Searching...' : 'Search' }}
+        </button>
+      </form>
+
+      <div class="options">
+        <div class="option">
+          <span class="option-label">Search by</span>
+          <div class="segmented">
+            <button type="button" [class.active]="field === 'subject'" (click)="field = 'subject'">Fashion Subject</button>
+            <button type="button" [class.active]="field === 'detail'" (click)="field = 'detail'">Fashion Detail</button>
+          </div>
+        </div>
+
+        <div class="option">
+          <span class="option-label">Similarity measure</span>
+          <div class="segmented">
+            <button type="button" [class.active]="metric === 'cosine'" (click)="metric = 'cosine'">Cosine</button>
+            <button type="button" [class.active]="metric === 'jaccard'" (click)="metric = 'jaccard'">Jaccard</button>
+          </div>
+        </div>
+
+        <div class="option">
+          <span class="option-label">Results</span>
+          <div class="segmented">
+            @for (n of topOptions; track n) {
+              <button type="button" [class.active]="top === n" (click)="top = n">{{ n === 0 ? 'All' : n }}</button>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    @if (errMessage()) {
+      <div class="alert alert-danger mb-0">{{ errMessage() }}</div>
+    }
+
+    <!-- ===== Results ===== -->
+    @if (searched()) {
+      <div class="summary">
+        <p>
+          Found <b>{{ results().length }}</b> fashion(s) · sorted by
+          <b>{{ searchedMetric() === 'cosine' ? 'Cosine' : 'Jaccard' }} Similarity</b>, high to low
+        </p>
+        <div class="legend">
+          <span class="pill sim-high">0.75 – 1 · High: {{ highCount() }}</span>
+          <span class="pill sim-medium">0.5 – 0.75 · Medium: {{ mediumCount() }}</span>
+          <span class="pill sim-low">&lt; 0.5 · Low: {{ lowCount() }}</span>
+        </div>
+      </div>
+
+      <section class="cards">
+        @for (f of results(); track f._id) {
+          <article class="card-item" [class]="levelClass(f.similarity)">
+            <div class="thumb">
+              <img [src]="f.getBase64String()" [alt]="f.fashion_subject">
+            </div>
+
+            <div class="info">
+              <div class="meta">
+                <span class="style-chip">{{ f.style }}</span>
+                <span class="id">{{ f._id }}</span>
+              </div>
+              <h2 class="subject">{{ f.fashion_subject }}</h2>
+              <p class="detail">
+                @if (isLong(f.fashion_detail) && !isExpanded(f._id)) {
+                  {{ f.fashion_detail | slice: 0 : DETAIL_LIMIT }}...
+                  <button type="button" class="see-more" (click)="toggleDetail(f._id)">See more</button>
+                } @else {
+                  {{ f.fashion_detail }}
+                  @if (isLong(f.fashion_detail)) {
+                    <button type="button" class="see-more" (click)="toggleDetail(f._id)">See less</button>
+                  }
+                }
+              </p>
+            </div>
+
+            <div class="score-box">
+              <span class="score-label">{{ searchedMetric() === 'cosine' ? 'Cosine' : 'Jaccard' }} Similarity</span>
+              <span class="score">{{ f.similarity | number: '1.4-4' }}</span>
+              <div class="bar"><div class="bar-fill" [style.width.%]="barWidth(f.similarity)"></div></div>
+              <span class="level">{{ levelLabel(f.similarity) }}</span>
+            </div>
+          </article>
+        } @empty {
+          <p class="empty">No fashion matches "{{ keyword }}"</p>
+        }
+      </section>
+    }
+  </div>
+</main>
